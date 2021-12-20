@@ -2,9 +2,29 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+let hearts = document.querySelectorAll(".like-glyph");
+hearts.forEach(heart => heart.addEventListener('click', handleLiking));
 
-
+function handleLiking(e){
+    if (e.target.textContent === EMPTY_HEART){
+    mimicServerCall()
+      .then( heart => {
+      e.target.className = "activated-heart";
+      e.target.textContent = FULL_HEART;
+      console.log("they like me");
+      })
+    .catch((reject) => {
+      let modal = document.getElementById("modal")
+      modal.classList.remove("hidden")
+      setTimeout(()=> modal.className = "hidden", 3000)
+      })
+    }
+  else {
+    e.target.classList.remove("activated-heart")
+    e.target.textContent = EMPTY_HEART
+    console.log("they do not like me anymore")
+  }
+}
 
 
 //------------------------------------------------------------------------------
